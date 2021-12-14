@@ -1,0 +1,52 @@
+---
+- name: upgrade the OS and all packages
+  apt:
+    upgrade: dist
+    update_cache: yes
+
+- name: install basic software environment
+  apt:
+    name: "{{ packages }}"
+    state: present
+  vars:
+    packages:
+      - wireguard
+      - neovim
+
+- name: install docker dependancies
+  apt:
+    name: "{{item}}"
+    state: present
+    update_cache: yes
+  loop:
+    - ca-certificates
+    - curl
+    - gnupg
+    - lsb-release
+
+- name: add docker GPG key
+  apt_key:
+    url: https://download.docker.com/linux/debian/gpg
+    state: present
+
+- name: add docker repository
+  apt_repository:
+    repo: deb [arch=arm64 signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/debian bullseye stable
+    state: present
+
+# - name: install docker and docker-compose
+#   apt:
+#     name: "{{item}}"
+#     state: latest
+#     update_cache: yes
+#   loop:
+#     - docker-ce
+#     - docker-ce-cli
+#     - containerd.io
+#     - docker-compose
+
+# - name: ensure the docker daemon has started
+#   service:
+#     name: docker
+#     state: started
+#     enabled: yes

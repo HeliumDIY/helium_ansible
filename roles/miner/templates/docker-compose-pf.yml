@@ -1,0 +1,83 @@
+---
+version: "2.1"
+services:
+  miner:
+    image: quay.io/team-helium/miner:miner-arm64_{{ target_miner_tag }}
+    container_name: miner
+    environment:
+      - REGION_OVERRIDE=US915
+    ports:
+      - "44158:44158/tcp"
+    volumes:
+      - /home/pi/miner_data:/var/data
+      - /home/pi/miner_config/sys.config:/config/sys.config
+    cap_add:
+      - SYS_RAWIO
+    devices:
+      - /dev/i2c-1:/dev/i2c-1
+    networks:
+      - helium
+    ulimits:
+      nofile:
+        soft: 64000
+        hard: 64000
+    restart: unless-stopped
+    logging:
+      driver: json-file
+      options:
+        tag: "{{ '{{' }}.ImageName{{ '}}' }}|{{ '{{' }}.Name{{ '}}' }}|{{ '{{' }}.ImageFullID{{ '}}' }}|{{ '{{' }}.FullID{{ '}}' }}"
+
+  node_exporter:
+    image: quay.io/prometheus/node-exporter:latest
+    container_name: node_exporter
+    command:
+      - '--path.rootfs=/host'
+    volumes:
+      - '/:/host:ro,rslave'
+    network_mode: host
+    pid: host
+    restart: unless-stopped
+    logging:
+      driver: json-file
+      options:
+        tag: "{{ '{{' }}.ImageName{{ '}}' }}|{{ '{{' }}.Name{{ '}}' }}|{{ '{{' }}.ImageFullID{{ '}}' }}|{{ '{{' }}.FullID{{ '}}' }}"
+
+  pf:
+    image: PF_IMAGE_HERE:latest
+    container_name: pf
+    environment:
+      - VENDOR={{ target_miner_vendor }}
+    volumes:
+      - /home/pi/pf:/opt/packet_forwarder/configs
+    networks:
+      - helium
+    privileged: true
+    restart: unless-stopped
+    logging:
+      driver: json-file
+      options:
+        tag: "{{ '{{' }}.ImageName{{ '}}' }}|{{ '{{' }}.Name{{ '}}' }}|{{ '{{' }}.ImageFullID{{ '}}' }}|{{ '{{' }}.FullID{{ '}}' }}"
+
+  promtail:
+    image: grafana/promtail:latest
+    container_name: promtail
+    environment:
+      - LOKI_SERVER={{ target_loki_server }}
+      - MINER_NAME={{ target_hostname }}
+    volumes:
+      - /home/pi/promtail/promtail.yaml:/etc/promtail/promtail.yaml
+      - /home/pi/promtail/tmp:/tmp
+      - /home/pi/miner_data/log:/host/home/pi/miner_data/log
+      - /var/lib/docker/containers:/host/var/lib/docker/containers
+      - /var/log:/host/var/log
+    command: -config.file=/etc/promtail/promtail.yaml -config.expand-env=true
+    networks:
+      - helium
+    restart: unless-stopped
+    logging:
+      driver: json-file
+      options:
+        tag: "{{ '{{' }}.ImageName{{ '}}' }}|{{ '{{' }}.Name{{ '}}' }}|{{ '{{' }}.ImageFullID{{ '}}' }}|{{ '{{' }}.FullID{{ '}}' }}"
+
+networks:
+  helium:

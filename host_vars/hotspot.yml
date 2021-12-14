@@ -1,0 +1,5 @@
+---
+target_hostname: "hotspot-animal-name"
+target_domain: "local"
+target_hotspot_key: True
+target_hotspot_vendor: "sensecap"
