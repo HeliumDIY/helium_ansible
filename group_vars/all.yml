@@ -1,10 +1,18 @@
 ---
-target_miner_tag: "2021.12.14.0"
+target_miner_tag: "latest-arm64"
 target_loki_server: "http://1.2.3.4:3100/loki/api/v1/push"
+prometheus_remote_write_endpoint: ""
+prometheus_remote_write_username: ""
+prometheus_remote_write_password: ""
 timezone: "America/Chicago"
 locale: "en_US.UTF-8"
 xkblayout: "us"
 wifi_country: "US"
+enable_prometheus: False
+enable_node_exporter: False
+enable_promtail: False
+enable_packet_forwarder: False
+enable_miner: True
 enable_gui: False
 enable_autologin: False
 enable_bootwait: False

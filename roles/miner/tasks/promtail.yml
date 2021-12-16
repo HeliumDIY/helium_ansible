@@ -1,0 +1,18 @@
+---
+- name: create promtail directory
+  file:
+    path: /home/pi/promtail
+    state: directory
+    owner: pi
+    group: pi
+    mode: 0755
+  when: "enable_promtail == True"
+
+- name: copy promtail configuration files
+  copy:
+    src: promtail/promtail.yaml
+    dest: /home/pi/promtail/promtail.yaml
+    owner: pi
+    group: pi
+    mode: 0644
+  when: "enable_promtail == True"
