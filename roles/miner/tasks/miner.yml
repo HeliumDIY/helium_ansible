@@ -1,0 +1,32 @@
+---
+- name: create miner_data directory
+  file:
+    path: /home/pi/miner_data
+    state: directory
+    owner: pi
+    group: pi
+    mode: 0755
+
+- name: create miner_config directory
+  file:
+    path: /home/pi/miner_config
+    state: directory
+    mode: 0755
+
+- name: copy miner configuration files for devices with a hardware key
+  copy:
+    src: miner_config-key/sys.config
+    dest: /home/pi/miner_config/sys.config
+    owner: pi
+    group: pi
+    mode: 0644
+  when: "target_miner_key == True"
+
+- name: copy miner configuration files for devices without a hardware key
+  copy:
+    src: miner_config-nokey/sys.config
+    dest: /home/pi/miner_config/sys.config
+    owner: pi
+    group: pi
+    mode: 0644
+  when: "target_miner_key == False"

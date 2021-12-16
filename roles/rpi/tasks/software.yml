@@ -12,6 +12,7 @@
     packages:
       - wireguard
       - neovim
+      - locales-all
 
 - name: install docker dependancies
   apt:

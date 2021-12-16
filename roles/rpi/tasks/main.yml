@@ -1,6 +1,7 @@
 ---
 - include: raspi-facts.yml
 - include: linux-facts.yml
+- include: software.yml
 
 - name: "set hostname"
   hostname:
@@ -23,13 +24,11 @@
   when: "timezone | default(false) and linux_tz != timezone"
 
 - name: "set locale"
-  script:
-    cmd: "localectl set-locale LANG={{ locale }}"
+  command: "localectl set-locale LANG={{ locale }}"
   when: "locale|default(false) and linux_locale != locale"
 
 - name: set wifi country
-  command: "raspiconfig nonint do_wifi_country {{ wifi_country }}"
+  command: "raspi-config nonint do_wifi_country {{ wifi_country }}"
   when: "wifi_country | default(false) and wifi_country != raspi_wifi_country"
 
 - include: raspi-config.yml
-- include: software.yml

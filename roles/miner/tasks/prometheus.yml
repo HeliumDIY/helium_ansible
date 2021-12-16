@@ -1,0 +1,18 @@
+---
+- name: create prometheus directory
+  file:
+    path: /home/pi/prometheus
+    state: directory
+    owner: pi
+    group: pi
+    mode: 0755
+  when: "enable_prometheus == True"
+
+- name: template out /home/pi/prometheus/prometheus.yml
+  template:
+    src: prometheus/prometheus.yml
+    dest: /home/pi/prometheus/prometheus.yml
+    owner: pi
+    group: pi
+    mode: 0644
+  when: "enable_prometheus == True"

@@ -1,0 +1,17 @@
+---
+- name: template out /home/pi/docker-compose.yml
+  template:
+    src: docker-compose.yml
+    dest: /home/pi/docker-compose.yml
+    owner: pi
+    group: pi
+    mode: 0644
+
+- name: docker-compose up
+  ansible.builtin.shell: docker-compose -f /home/pi/docker-compose.yml up -d --remove-orphans
+
+- name: cron job to update miner
+  ansible.builtin.cron:
+    name: "update miner"
+    minute: "*/30"
+    job: "docker-compose -f /home/pi/docker-compose.yml pull miner && docker-compose -f /home/pi/docker-compose.yml ps -q miner && docker-compose -f /home/pi/docker-compose.yml up -d miner"
