@@ -1,5 +1,8 @@
 ---
 target_miner_tag: "latest-arm64"
+target_miner_region: "US915"
+target_pf_image: "ghcr.io/heliumdiy/sx1302_hal"
+target_pf_version: "0.0.1"
 target_loki_server: "http://1.2.3.4:3100/loki/api/v1/push"
 prometheus_remote_write_endpoint: ""
 prometheus_remote_write_username: ""
