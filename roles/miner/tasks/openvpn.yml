@@ -1,0 +1,91 @@
+---
+
+- name: install openvpn package
+  apt:
+    name: "openvpn"
+    state: present
+  when: openvpn_config is defined
+
+- name: template out /etc/openvpn/auth.txt
+  template:
+    src: openvpn/auth.txt
+    dest: /etc/openvpn/auth.txt
+    owner: root
+    group: root
+    mode: 0644
+  when: openvpn_config is defined
+
+- name: Download ipvanish configuration files
+  unarchive:
+    src: https://www.ipvanish.com/software/simpleconf/configs.zip
+    dest: /etc/openvpn/
+    remote_src: yes
+  when: openvpn_config is defined
+
+- name: Copy /etc/openvpn/{openvpn_config}.ovpn to /etc/openvpn/{openvpn_config}.conf
+  copy:
+    remote_src: yes
+    src: "/etc/openvpn/{{ openvpn_config }}.ovpn"
+    dest: "/etc/openvpn/{{ openvpn_config }}.conf"
+    owner: root
+    group: root
+    mode: 0644
+  when: openvpn_config is defined
+
+- name: Enable autostart authentication
+  ansible.builtin.lineinfile:
+    state: present
+    path: "/etc/openvpn/{{ openvpn_config }}.conf"
+    regexp: '^auth-user-pass'
+    line: auth-user-pass auth.txt
+  when: openvpn_config is defined
+
+- name: Set mssfix to 1280
+  ansible.builtin.lineinfile:
+    state: present
+    path: "/etc/openvpn/{{ openvpn_config }}.conf"
+    regexp: '^mssfix'
+    line: mssfix 1280
+  when: openvpn_config is defined
+
+- name: Configure openvpn autostart config from openvpn_config
+  ansible.builtin.lineinfile:
+    state: present
+    path: /etc/default/openvpn
+    regexp: '^AUTOSTART='
+    line: AUTOSTART="{{ openvpn_config }}"
+  when: openvpn_config is defined
+
+- name: Disable openvpn autostart config from openvpn_config
+  ansible.builtin.lineinfile:
+    state: present
+    path: /etc/default/openvpn
+    regexp: '^AUTOSTART='
+    line: AUTOSTART="none"
+  when: openvpn_config is not defined
+
+- name: Enable service openvpn
+  ansible.builtin.systemd:
+    name: openvpn
+    enabled: yes
+    masked: no
+  when: openvpn_config is defined
+
+- name: Disable service openvpn
+  ansible.builtin.systemd:
+    name: openvpn
+    enabled: no
+    masked: no
+  when: openvpn_config is not defined
+
+- name: Make sure openvpn is running
+  ansible.builtin.systemd:
+    state: started
+    name: openvpn
+  when: openvpn_config is defined
+
+- name: Make sure openvpn is not running
+  ansible.builtin.systemd:
+    state: stopped
+    name: openvpn
+  when: openvpn_config is not defined
