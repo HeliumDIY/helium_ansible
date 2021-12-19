@@ -42,6 +42,7 @@ services:
       - CONCENTRATOR_MODEL={{ target_pf_concentrator_model }}
     volumes:
       - /home/pi/pf:/opt/packet_forwarder/configs
+      - /sys/class/gpio:/sys/class/gpio
     networks:
       - helium
     privileged: true

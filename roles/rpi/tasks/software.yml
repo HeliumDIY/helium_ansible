@@ -13,7 +13,9 @@
       - wireguard
       - neovim
       - locales-all
-
+      - neofetch
+      - jq # JSON cli processor for Height Helper
+      - bc # Basic Calculator for Height Helper
 - name: install docker dependancies
   apt:
     name: "{{item}}"
@@ -24,17 +26,21 @@
     - curl
     - gnupg
     - lsb-release
+    - python3-pip
+
+  when: "docker_convenience_install == False"
 
 - name: add docker GPG key
   apt_key:
     url: https://download.docker.com/linux/debian/gpg
     state: present
+  when: "docker_convenience_install == False"
 
 - name: add docker repository
   apt_repository:
     repo: deb [arch=arm64 signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/debian bullseye stable
     state: present
-
+  when: "docker_convenience_install == False"
 # - name: install docker and docker-compose
 #   apt:
 #     name: "{{item}}"

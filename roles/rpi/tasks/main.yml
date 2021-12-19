@@ -32,3 +32,7 @@
   when: "wifi_country | default(false) and wifi_country != raspi_wifi_country"
 
 - include: raspi-config.yml
+
+- name: "Docker Convenience Install"
+  include: docker-convenience.yml
+  when: "docker_convenience_install == True"
