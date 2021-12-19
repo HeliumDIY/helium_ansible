@@ -1,5 +1,7 @@
 ---
 target_hostname: "hotspot-animal-name"
 target_domain: "local"
-target_hotspot_key: True
-target_hotspot_vendor: "sensecap"
+target_hotspot_vendor: "cotx"
+target_miner_key: True
+target_pf_concentrator_interface: "spi" # usb
+target_pf_concentrator_model: "sx1250" # only sx1250 for now

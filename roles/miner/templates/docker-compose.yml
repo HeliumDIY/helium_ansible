@@ -36,12 +36,13 @@ services:
     image: {{ target_pf_image }}:{{ target_pf_tag }}
     container_name: pf
     environment:
-      - VENDOR={{ target_miner_vendor }}
+      - VENDOR={{ target_hotspot_vendor }}
       - REGION={{ target_miner_region }}
       - CONCENTRATOR_INTERFACE={{ target_pf_concentrator_interface }}
       - CONCENTRATOR_MODEL={{ target_pf_concentrator_model }}
     volumes:
       - /home/pi/pf:/opt/packet_forwarder/configs
+      - /sys/class/gpio:/sys/class/gpio
     networks:
       - helium
     privileged: true

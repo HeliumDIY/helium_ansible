@@ -30,3 +30,26 @@
     group: pi
     mode: 0644
   when: "target_miner_key == False"
+
+- name: create miner_scripts directory
+  file:
+    path: /home/pi/miner_scripts
+    state: directory
+    owner: pi
+    group: pi
+    mode: 0755
+
+- name: copy miner fastsync script
+  copy:
+    src: miner_scripts/fastsync.sh
+    dest: /home/pi/miner_scripts/fastsync.sh
+    owner: pi
+    group: pi
+    mode: 0755
+- name: copy miner height helper script
+  copy:
+    src: miner_scripts/height-helper.sh
+    dest: /home/pi/miner_scripts/height-helper.sh
+    owner: pi
+    group: pi
+    mode: 0755

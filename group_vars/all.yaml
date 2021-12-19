@@ -1,24 +1,20 @@
----
+
+#Miner
+enable_miner: True
 target_miner_tag: "latest-arm64"
-target_miner_region: "US915" #EU868
-target_miner_vendor: "rak" # cotx, sensecap
+#Packet Forwarder
+enable_packet_forwarder: True
 target_pf_image: "ghcr.io/heliumdiy/sx1302_hal" # heliumdiy/sx1302_hal on docker hub
-target_pf_version: "0.0.1"
-target_pf_concentrator_interface: "spi" # usb
-target_pf_concentrator_model: "sx1250" # only sx1250 for now
+target_pf_tag: "c8d512f0603b0eaf2b182cfdc45f4f353e093c7f"
+#Loki & Prometheus
+enable_prometheus: False
+enable_node_exporter: True
+enable_promtail: True
 target_loki_server: "http://1.2.3.4:3100/loki/api/v1/push"
 prometheus_remote_write_endpoint: ""
 prometheus_remote_write_username: ""
 prometheus_remote_write_password: ""
-timezone: "America/Chicago"
-locale: "en_US.UTF-8"
-xkblayout: "us"
-wifi_country: "US"
-enable_prometheus: False
-enable_node_exporter: False
-enable_promtail: False
-enable_packet_forwarder: False
-enable_miner: True
+# Raspberry Pi Configuration
 enable_gui: False
 enable_autologin: False
 enable_bootwait: False
@@ -31,3 +27,10 @@ enable_serial: False
 enable_serial_hw: True
 enable_onewire: False
 enable_rgpio: False
+#Docker
+docker_convenience_install: True
+docker_version: "latest"
+docker_install_recommends: true
+docker_install_compose: true
+docker_users: [pi]
+docker_pip_executable: pip3
