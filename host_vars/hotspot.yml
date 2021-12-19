@@ -1,5 +1,5 @@
 ---
-target_hostname: "wonderful-cinnabar-bee"
+target_hostname: "hotspot-animal-name"
 target_domain: "local"
 target_hotspot_vendor: "cotx"
 target_miner_key: True
