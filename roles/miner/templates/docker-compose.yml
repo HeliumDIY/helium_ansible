@@ -1,7 +1,66 @@
 ---
 version: "2.1"
 services:
+{% if enable_packet_forwarder %}
+  packet_forwarder:
+    image: {{ target_pf_image }}:{{ target_pf_tag }}
+    container_name: pf
+    environment:
+      - VENDOR={{ target_hotspot_vendor }}
+      - REGION={{ target_miner_region }}
+      - CONCENTRATOR_INTERFACE={{ target_pf_concentrator_interface }}
+      - CONCENTRATOR_MODEL={{ target_pf_concentrator_model }}
+    volumes:
+      - /home/pi/pf:/opt/packet_forwarder/configs
+      - /sys/class/gpio:/sys/class/gpio
+    devices:
+      - /dev/spidev0.0:/dev/spidev0.0
+      - /dev/spidev0.1:/dev/spidev0.1
+    cap_add:
+      - SYS_RAWIO
+    networks:
+      - helium
+    privileged: true
+    restart: unless-stopped  
+    logging:
+      driver: json-file  
+      options:
+        tag: "{{ '{{' }}.ImageName{{ '}}' }}|{{ '{{' }}.Name{{ '}}' }}|{{ '{{' }}.ImageFullID{{ '}}' }}|{{ '{{' }}.FullID{{ '}}' }}"
 {% if enable_miner %}
+  miner:
+    image: quay.io/team-helium/miner:{{ target_miner_tag }}
+    container_name: miner
+    environment:
+      - REGION_OVERRIDE={{ target_miner_region }}
+    ports:
+      - "44158:44158/tcp"
+      - "1680:1680/udp"
+      - "4467:4467/tcp"
+    volumes:
+      - /home/pi/miner_data:/var/data
+      - /home/pi/miner_config/sys.config:/config/sys.config
+    cap_add:
+      - SYS_RAWIO
+    devices:
+      - /dev/i2c-1:/dev/i2c-1
+    depends_on:
+      - packet_forwarder
+    networks:
+      - helium
+    ulimits:
+      nofile:
+        soft: 64000
+        hard: 64000
+    restart: unless-stopped
+    logging:
+      driver: json-file
+      options:
+        tag: "{{ '{{' }}.ImageName{{ '}}' }}|{{ '{{' }}.Name{{ '}}' }}|{{ '{{' }}.ImageFullID{{ '}}' }}|{{ '{{' }}.FullID{{ '}}' }}"
+{% endif %}
+{% endif %}
+
+
+{% if enable_miner and enable_packet_forwarder == False %}
   miner:
     image: quay.io/team-helium/miner:{{ target_miner_tag }}
     container_name: miner
@@ -30,29 +89,7 @@ services:
       options:
         tag: "{{ '{{' }}.ImageName{{ '}}' }}|{{ '{{' }}.Name{{ '}}' }}|{{ '{{' }}.ImageFullID{{ '}}' }}|{{ '{{' }}.FullID{{ '}}' }}"
 {% endif %}
-
-{% if enable_packet_forwarder %}
-  packet_forwarder:
-    image: {{ target_pf_image }}:{{ target_pf_tag }}
-    container_name: pf
-    environment:
-      - VENDOR={{ target_hotspot_vendor }}
-      - REGION={{ target_miner_region }}
-      - CONCENTRATOR_INTERFACE={{ target_pf_concentrator_interface }}
-      - CONCENTRATOR_MODEL={{ target_pf_concentrator_model }}
-    volumes:
-      - /home/pi/pf:/opt/packet_forwarder/configs
-      - /sys/class/gpio:/sys/class/gpio
-    networks:
-      - helium
-    privileged: true
-    restart: unless-stopped  
-    logging:
-      driver: json-file  
-      options:
-        tag: "{{ '{{' }}.ImageName{{ '}}' }}|{{ '{{' }}.Name{{ '}}' }}|{{ '{{' }}.ImageFullID{{ '}}' }}|{{ '{{' }}.FullID{{ '}}' }}"
-{% endif %}
-
+  
 {% if enable_node_exporter %}
   node_exporter:
     image: quay.io/prometheus/node-exporter:latest
