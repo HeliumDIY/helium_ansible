@@ -123,4 +123,7 @@ volumes:
 
 networks:
   helium:
-
+   driver: bridge
+   ipam:
+    config:
+     - subnet: 172.16.57.0/24
