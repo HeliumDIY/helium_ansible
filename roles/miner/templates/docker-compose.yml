@@ -121,6 +121,22 @@ volumes:
         tag: "{{ '{{' }}.ImageName{{ '}}' }}|{{ '{{' }}.Name{{ '}}' }}|{{ '{{' }}.ImageFullID{{ '}}' }}|{{ '{{' }}.FullID{{ '}}' }}"
 {% endif %}
 
+{% if enable_workarounds %}
+  helium_workarounds:
+    image: ghcr.io/heliumdiy/helium_workarounds:latest
+    container_name: helium_workarounds
+    volumes:
+      - /home/pi/miner_data/log:/log
+      - /var/run/docker.sock:/var/run/docker.sock
+    networks:
+      - helium
+    restart: unless-stopped
+    logging:
+      driver: json-file
+      options:
+        tag: "{{.ImageName}}|{{.Name}}|{{.ImageFullID}}|{{.FullID}}"
+{% endif %}
+
 networks:
   helium:
    driver: bridge
