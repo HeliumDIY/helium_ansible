@@ -51,6 +51,10 @@ scrape_configs:
      source: output
 
 - job_name: miner
+  pipeline_stages:
+        - multiline:
+            firstline: '^\d{4}-\d{2}-\d{2}\s\d{1,2}\:\d{2}\:\d{2}\.\d{3}'
+            max_wait_time: 3s
   static_configs:
   - targets:
       - localhost
