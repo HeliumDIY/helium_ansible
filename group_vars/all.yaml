@@ -14,6 +14,8 @@ target_loki_server: "http://1.2.3.4:3100/loki/api/v1/push"
 prometheus_remote_write_endpoint: ""
 prometheus_remote_write_username: ""
 prometheus_remote_write_password: ""
+# Workarounds
+enable_workarounds: True
 # Raspberry Pi Configuration
 enable_gui: False
 enable_autologin: False
