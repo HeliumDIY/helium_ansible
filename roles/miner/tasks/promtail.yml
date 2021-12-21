@@ -16,3 +16,8 @@
     group: pi
     mode: 0644
   when: "enable_promtail == True"
+  register: promtail
+
+- name: restart promtail
+  ansible.builtin.shell: docker-compose -f /home/pi/docker-compose.yml restart promtail
+  when: promtail.changed
