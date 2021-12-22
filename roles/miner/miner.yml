@@ -1,0 +1,16 @@
+---
+- hosts: all
+  tasks: 
+    - name: Miner
+      import_tasks: miner.yml
+    - name: Docker
+      import_tasks: docker.yml
+    - name: Include OpenVPN tasks
+      import_tasks: openvpn.yml
+      when: openvpn_config is defined
+    - name: Prometheus
+      import_tasks: prometheus.yml
+      when: enable_prometheus == True
+    - name: Promtail
+      import_tasks: prometail.yml
+      when: enable_promtail == True
