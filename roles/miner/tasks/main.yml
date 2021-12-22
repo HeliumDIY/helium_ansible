@@ -1,7 +1,0 @@
----
-
-- include: miner.yml
-- include: promtail.yml
-- include: prometheus.yml
-- include: docker.yml
-- include: openvpn.yml
