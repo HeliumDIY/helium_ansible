@@ -64,15 +64,6 @@ scrape_configs:
         stages:
         - regex:
             expression: '^(?P<timestamp>\d{4}-\d{2}-\d{2}\s\d{1,2}\:\d{2}\:\d{2}\.\d{3})\s+(?P<pid>\d+)\s+\[(?P<level>\w+)\]\s+\<(?P<thread>[\d.]+)\>@(?P<module>\w+):(?P<function>\w+):(?P<line>\d+)\s(?P<message>.+)$'
-        - labels:
-            timestamp:
-            pid:
-            level:
-            thread:
-            module:
-            function:
-            line:
-            message:
         - timestamp:
             format: '2006-01-02 15:04:05.000'
             source: timestamp
