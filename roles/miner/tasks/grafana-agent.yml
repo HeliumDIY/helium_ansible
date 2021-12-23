@@ -1,0 +1,15 @@
+- name: create grafana agent directory
+  file:
+    path: /home/pi/grafana-agent
+    state: directory
+    owner: pi
+    group: pi
+    mode: 0755
+
+- name: template out /home/pi/grafana-agent/agent.yml
+  template:
+    src: grafana-agent/agent.yml
+    dest: /home/pi/grafana-agent/agent.yml
+    owner: pi
+    group: pi
+    mode: 0644
