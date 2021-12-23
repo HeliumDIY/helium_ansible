@@ -31,10 +31,10 @@
     mode: 0644
   when: "target_miner_key == False"
 
-- name: cron job to peer with Rural Jade Cricket
+- name: cron job to peer with seed node
   ansible.builtin.cron:
     name: "miner peer connect"
-    job: curl -s -d '{"jsonrpc":"2.0","id":"id","method":"peer_connect","params":{"addr":"/p2p/112t2PgjF2anuV7iVPNTV89MpS4BK95k8xzPoeqVQueLhkFf7Aw1"}}' http://localhost:4467/
+    job: curl -s -d '{"jsonrpc":"2.0","id":"id","method":"peer_connect","params":{"addr":"{{ seed_peer }}"}}' http://localhost:4467/
 
 - name: create miner_scripts directory
   file:
