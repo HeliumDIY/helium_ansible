@@ -130,8 +130,27 @@ services:
       options:
         tag: "{{ '{{' }}.ImageName{{ '}}' }}|{{ '{{' }}.Name{{ '}}' }}|{{ '{{' }}.ImageFullID{{ '}}' }}|{{ '{{' }}.FullID{{ '}}' }}"
 
-volumes:
-  prometheus_data: {}
+{% endif %}
+
+{% if enable_grafana_agent %}
+  grafana-agent:
+    image: grafana/agent:latest
+    container_name: grafana-agent
+    volumes:
+      - /data/var/lib/docker/containers:/containers #Promtail Docker Logs
+      - /var/log/journal:/journal #Journal logs
+      - /home/pi/grafana-agent/agent.yml:/etc/agent/agent.yml # Agent Config
+      - /:/host/root:ro,rslave # rootfs / node_exporter
+      - /sys:/host/sys:ro,rslave # sys / node_exporter
+      - /proc:/host/proc:ro,rslave #processes / node_exporter
+    command: -config.file=/etc/agent/agent.yml -config.expand-env=true
+    networks:
+      - helium
+    restart: unless-stopped
+    logging:
+      driver: json-file
+      options:
+        tag: "{{ '{{' }}.ImageName{{ '}}' }}|{{ '{{' }}.Name{{ '}}' }}|{{ '{{' }}.ImageFullID{{ '}}' }}|{{ '{{' }}.FullID{{ '}}' }}"
 {% endif %}
 
 {% if enable_workarounds %}
