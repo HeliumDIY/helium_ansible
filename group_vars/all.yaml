@@ -2,6 +2,7 @@
 #Miner
 enable_miner: True
 target_miner_tag: "latest-arm64"
+seed_peer: "/p2p/11oJtuhhwf2xMvWnFtpK6G1AAPnBCYc2JvVQqwUo91aGCgxJGP"
 #Packet Forwarder
 enable_packet_forwarder: True
 target_pf_image: "ghcr.io/heliumdiy/sx1302_hal" # heliumdiy/sx1302_hal on docker hub
