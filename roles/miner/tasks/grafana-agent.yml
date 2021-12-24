@@ -16,6 +16,6 @@
   register: grafana_agent_config
 
 - name: docker restart grafana-agent
-  ansible.builtin.shell: docker restart grafana-agent
+  ansible.builtin.shell: docker ps -qf name=grafana-agent |grep -E '^\w+' && docker restart grafana-agent
   when: grafana_agent_config.changed
 
