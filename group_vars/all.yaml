@@ -10,6 +10,7 @@ target_pf_tag: "c8d512f0603b0eaf2b182cfdc45f4f353e093c7f"
 #Loki & Prometheus
 enable_prometheus: False
 enable_node_exporter: True
+enable_grafana_agent: True
 target_loki_server: "http://1.2.3.4:3100/loki/api/v1/push"
 prometheus_remote_write_endpoint: ""
 prometheus_remote_write_username: ""
