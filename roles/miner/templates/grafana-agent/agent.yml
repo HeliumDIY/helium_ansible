@@ -100,6 +100,24 @@ metrics:
               target_label: node
               replacement: {{ target_hostname }}
 {% endif %}
+{% if enable_docker_daemon_metrics %}
+    - name: docker-daemon
+      scrape_configs:
+        - job_name: docker-daemon
+          scrape_interval: 20s
+          scrape_timeout: 10s
+          static_configs:
+            - targets: ["host.docker.internal:{{ docker_daemon_metrics_port }}"]
+          relabel_configs:
+            - source_labels: [__address__]
+              regex: ".*"
+              target_label: instance
+              replacement: {{ target_hostname }}
+            - source_labels: [__address__]
+              regex: ".*"
+              target_label: node
+              replacement: {{ target_hostname }}
+{% endif %}
 integrations:
   node_exporter:
     enabled: true

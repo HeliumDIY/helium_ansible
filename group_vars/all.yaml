@@ -14,6 +14,8 @@ prometheus_remote_write_endpoint: "" # Needed by the Grafana Agent to Ship Metri
 prometheus_remote_write_username: "" # Needed by the Grafana Agent to Ship Metrics to Prometheus
 prometheus_remote_write_password: "" # Needed by the Grafana Agent to Ship Metrics to Prometheus
 enable_cadvisor: True
+enable_docker_daemon_metrics: True
+docker_daemon_metrics_port: 9323
 # Workarounds
 enable_workarounds: True
 # Raspberry Pi Configuration
