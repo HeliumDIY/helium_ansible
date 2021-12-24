@@ -10,7 +10,7 @@ target_pf_tag: "0.0.3"
 #Loki & Prometheus
 enable_node_exporter: False
 enable_grafana_agent: True
-enable_json_exporter: True
+enable_json_exporter: False
 target_loki_server: "http://1.2.3.4:3100/loki/api/v1/push" # Needed by the Grafana Agent to Ship Logs to Loki
 prometheus_remote_write_endpoint: "" # Needed by the Grafana Agent to Ship Metrics to Prometheus 
 prometheus_remote_write_username: "" # Needed by the Grafana Agent to Ship Metrics to Prometheus 
