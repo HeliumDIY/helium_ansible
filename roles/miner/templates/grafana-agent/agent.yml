@@ -99,10 +99,3 @@ metrics:
               regex: ".*"
               target_label: node
               replacement: "{{ target_hostname }}"
-  {% if enable_cadvisor %}
-  - name: cadvisor
-      scrape_configs:
-      - job_name: docker-integration
-        static_configs:
-          - targets: ['cadvisor:8080']
-  {% endif %}
