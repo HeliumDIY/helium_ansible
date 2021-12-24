@@ -1,0 +1,21 @@
+- name: create json exporter directory
+  file:
+    path: /home/pi/json-exporter
+    state: directory
+    owner: pi
+    group: pi
+    mode: 0755
+
+- name: create /home/pi/json-exporter/config.yml
+  copy:
+    src: json-exporter/config.yml
+    dest: /home/pi/json-exporter/config.yml
+    owner: pi
+    group: pi
+    mode: 0644
+  register: json_exporter_config
+
+- name: docker restart json-exporter
+  ansible.builtin.shell: docker ps -qf name=json-exporter |grep -E '^\w+' && docker restart json-exporter
+  ignore_errors: yes
+  when: json_exporter_config.changed
