@@ -13,9 +13,9 @@
     owner: pi
     group: pi
     mode: 0644
-  register: grafana-agent-config
+  register: grafana_agent_config
 
 - name: docker restart grafana-agent
   ansible.builtin.shell: docker restart grafana-agent
-  when: grafana-agent-config.changed
+  when: grafana_agent_config.changed
 
