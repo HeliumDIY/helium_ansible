@@ -67,9 +67,6 @@ logs:
         - multiline:
             firstline: '^\d{4}-\d{2}-\d{2}\s\d{1,2}\:\d{2}\:\d{2}\.\d{3}'
             max_wait_time: 3s
-
-
-
 metrics:
   wal_directory: /tmp/agent
   wal_cleanup_age: 12h
@@ -84,6 +81,23 @@ metrics:
         basic_auth:
           username: {{ prometheus_remote_write_username }}
           password: {{ prometheus_remote_write_password }}
+  configs:
+  - name: cadvisor
+    scrape_configs:
+      - job_name: cadvisor
+        scrape_interval: 20s
+        scrape_timeout: 10s
+        static_configs:
+          - targets: ["cadvisor:8080"]
+        relabel_configs:
+          - source_labels: [__address__]
+            regex: ".*"
+            target_label: instance
+            replacement: {{ target_hostname }}
+          - source_labels: [__address__]
+            regex: ".*"
+            target_label: node
+            replacement: {{ target_hostname }}
 integrations:
   node_exporter:
     enabled: true
