@@ -57,23 +57,6 @@ services:
         tag: "{{ '{{' }}.ImageName{{ '}}' }}|{{ '{{' }}.Name{{ '}}' }}|{{ '{{' }}.ImageFullID{{ '}}' }}|{{ '{{' }}.FullID{{ '}}' }}"
 {% endif %}
 
-{% if enable_node_exporter %}
-  node_exporter:
-    image: quay.io/prometheus/node-exporter:latest
-    container_name: node_exporter
-    command:
-      - '--path.rootfs=/host'
-    volumes:
-      - '/:/host:ro,rslave'
-    network_mode: host
-    pid: host
-    restart: unless-stopped
-    logging:
-      driver: json-file
-      options:
-        tag: "{{ '{{' }}.ImageName{{ '}}' }}|{{ '{{' }}.Name{{ '}}' }}|{{ '{{' }}.ImageFullID{{ '}}' }}|{{ '{{' }}.FullID{{ '}}' }}"
-{% endif %}
-
 {% if enable_grafana_agent %}
   grafana-agent:
     image: grafana/agent:latest
