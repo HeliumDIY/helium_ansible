@@ -5,9 +5,6 @@
 - name: Include OpenVPN tasks
   import_tasks: openvpn.yml
   when: openvpn_config is defined
-- name: Prometheus
-  import_tasks: prometheus.yml
-  when: enable_prometheus == True
 - name: Grafana Agent
   import_tasks: grafana-agent.yml
   when: enable_grafana_agent == True

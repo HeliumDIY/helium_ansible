@@ -8,13 +8,12 @@ enable_packet_forwarder: True
 target_pf_image: "ghcr.io/heliumdiy/sx1302_hal" # heliumdiy/sx1302_hal on docker hub
 target_pf_tag: "0.0.3"
 #Loki & Prometheus
-enable_prometheus: False
 enable_node_exporter: True
 enable_grafana_agent: True
-target_loki_server: "http://1.2.3.4:3100/loki/api/v1/push"
-prometheus_remote_write_endpoint: ""
-prometheus_remote_write_username: ""
-prometheus_remote_write_password: ""
+target_loki_server: "http://1.2.3.4:3100/loki/api/v1/push" # Needed by the Grafana Agent to Ship Logs to Loki
+prometheus_remote_write_endpoint: "" # Needed by the Grafana Agent to Ship Metrics to Prometheus 
+prometheus_remote_write_username: "" # Needed by the Grafana Agent to Ship Metrics to Prometheus 
+prometheus_remote_write_password: "" # Needed by the Grafana Agent to Ship Metrics to Prometheus 
 # Workarounds
 enable_workarounds: True
 # Raspberry Pi Configuration

@@ -26,6 +26,7 @@ services:
       driver: json-file  
       options:
         tag: "{{ '{{' }}.ImageName{{ '}}' }}|{{ '{{' }}.Name{{ '}}' }}|{{ '{{' }}.ImageFullID{{ '}}' }}|{{ '{{' }}.FullID{{ '}}' }}"
+{% endif %}
 {% if enable_miner %}
   miner:
     image: quay.io/team-helium/miner:{{ target_miner_tag }}
@@ -43,8 +44,6 @@ services:
       - SYS_RAWIO
     devices:
       - /dev/i2c-1:/dev/i2c-1
-    depends_on:
-      - packet_forwarder
     networks:
       - helium
     ulimits:
@@ -57,39 +56,7 @@ services:
       options:
         tag: "{{ '{{' }}.ImageName{{ '}}' }}|{{ '{{' }}.Name{{ '}}' }}|{{ '{{' }}.ImageFullID{{ '}}' }}|{{ '{{' }}.FullID{{ '}}' }}"
 {% endif %}
-{% endif %}
 
-
-{% if enable_miner and enable_packet_forwarder == False %}
-  miner:
-    image: quay.io/team-helium/miner:{{ target_miner_tag }}
-    container_name: miner
-    environment:
-      - REGION_OVERRIDE={{ target_miner_region }}
-    ports:
-      - "44158:44158/tcp"
-      - "1680:1680/udp"
-      - "4467:4467/tcp"
-    volumes:
-      - /home/pi/miner_data:/var/data
-      - /home/pi/miner_config/sys.config:/config/sys.config
-    cap_add:
-      - SYS_RAWIO
-    devices:
-      - /dev/i2c-1:/dev/i2c-1
-    networks:
-      - helium
-    ulimits:
-      nofile:
-        soft: 64000
-        hard: 64000
-    restart: unless-stopped
-    logging:
-      driver: json-file
-      options:
-        tag: "{{ '{{' }}.ImageName{{ '}}' }}|{{ '{{' }}.Name{{ '}}' }}|{{ '{{' }}.ImageFullID{{ '}}' }}|{{ '{{' }}.FullID{{ '}}' }}"
-{% endif %}
-  
 {% if enable_node_exporter %}
   node_exporter:
     image: quay.io/prometheus/node-exporter:latest
@@ -105,31 +72,6 @@ services:
       driver: json-file
       options:
         tag: "{{ '{{' }}.ImageName{{ '}}' }}|{{ '{{' }}.Name{{ '}}' }}|{{ '{{' }}.ImageFullID{{ '}}' }}|{{ '{{' }}.FullID{{ '}}' }}"
-{% endif %}
-
-{% if enable_prometheus %}
-  prometheus:
-    image: prom/prometheus:latest
-    container_name: prometheus
-    restart: unless-stopped
-    volumes:
-      - /home/pi/prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
-      - prometheus_data:/prometheus
-    command:
-      - '--config.file=/etc/prometheus/prometheus.yml'
-      - '--storage.tsdb.path=/prometheus'
-      - '--web.console.libraries=/etc/prometheus/console_libraries'
-      - '--web.console.templates=/etc/prometheus/consoles'
-      - '--web.enable-lifecycle'
-    expose:
-      - 9090
-    networks:
-      - helium
-    logging:
-      driver: json-file
-      options:
-        tag: "{{ '{{' }}.ImageName{{ '}}' }}|{{ '{{' }}.Name{{ '}}' }}|{{ '{{' }}.ImageFullID{{ '}}' }}|{{ '{{' }}.FullID{{ '}}' }}"
-
 {% endif %}
 
 {% if enable_grafana_agent %}
