@@ -9,5 +9,8 @@
 - name: JSON Exporter
   import_tasks: json-exporter.yml
   when: enable_json_exporter == True
+- name: Docker Daemon Metrics
+  import_tasks: docker-metrics.yml
+  when: enable_docker_daemon_metrics == True
 - name: Docker
   import_tasks: docker.yml
