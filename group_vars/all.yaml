@@ -1,4 +1,3 @@
-
 #Miner
 enable_miner: True
 target_miner_tag: "latest-arm64"
@@ -11,9 +10,12 @@ target_pf_tag: "0.0.3"
 enable_node_exporter: False
 enable_grafana_agent: True
 target_loki_server: "http://1.2.3.4:3100/loki/api/v1/push" # Needed by the Grafana Agent to Ship Logs to Loki
-prometheus_remote_write_endpoint: "" # Needed by the Grafana Agent to Ship Metrics to Prometheus 
-prometheus_remote_write_username: "" # Needed by the Grafana Agent to Ship Metrics to Prometheus 
-prometheus_remote_write_password: "" # Needed by the Grafana Agent to Ship Metrics to Prometheus 
+prometheus_remote_write_endpoint: "" # Needed by the Grafana Agent to Ship Metrics to Prometheus
+prometheus_remote_write_username: "" # Needed by the Grafana Agent to Ship Metrics to Prometheus
+prometheus_remote_write_password: "" # Needed by the Grafana Agent to Ship Metrics to Prometheus
+enable_cadvisor: True
+enable_docker_daemon_metrics: True
+docker_daemon_metrics_port: 9323
 # Workarounds
 enable_workarounds: True
 # Raspberry Pi Configuration

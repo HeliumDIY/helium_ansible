@@ -77,6 +77,29 @@ services:
       options:
         tag: "{{ '{{' }}.ImageName{{ '}}' }}|{{ '{{' }}.Name{{ '}}' }}|{{ '{{' }}.ImageFullID{{ '}}' }}|{{ '{{' }}.FullID{{ '}}' }}"
 {% endif %}
+{% if enable_cadvisor %}
+  cadvisor:
+    image: unibaktr/cadvisor:0.39.0
+    container_name: cadvisor
+    volumes:
+        - /:/rootfs:ro
+        - /var/run:/var/run:ro
+        - /sys:/sys:ro
+        - /var/lib/docker/:/var/lib/docker:ro
+        - /dev/disk/:/dev/disk:ro
+        - /etc/machine-id/:/etc/machine-id:ro
+    devices:
+        - /dev/kmsg:/dev/kmsg:ro
+    ports:
+        - "8080:8080"
+    networks:
+      - helium
+    restart: unless-stopped
+    logging:
+      driver: json-file
+      options:
+        tag: "{{ '{{' }}.ImageName{{ '}}' }}|{{ '{{' }}.Name{{ '}}' }}|{{ '{{' }}.ImageFullID{{ '}}' }}|{{ '{{' }}.FullID{{ '}}' }}"
+  {% endif %}
 
 {% if enable_workarounds %}
   helium_workarounds:

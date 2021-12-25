@@ -8,3 +8,6 @@
 - name: Grafana Agent
   import_tasks: grafana-agent.yml
   when: enable_grafana_agent == True
+- name: Docker Daemon Metrics
+  import_tasks: docker-metrics.yml
+  when: enable_docker_daemon_metrics == True
