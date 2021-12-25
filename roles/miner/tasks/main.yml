@@ -1,7 +1,5 @@
 - name: Miner
   import_tasks: miner.yml
-- name: Docker
-  import_tasks: docker.yml
 - name: Include OpenVPN tasks
   import_tasks: openvpn.yml
   when: openvpn_config is defined
@@ -11,3 +9,5 @@
 - name: Docker Daemon Metrics
   import_tasks: docker-metrics.yml
   when: enable_docker_daemon_metrics == True
+- name: Docker
+  import_tasks: docker.yml
