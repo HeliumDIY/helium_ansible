@@ -2,6 +2,7 @@
 version: "2.1"
 services:
 {% if enable_packet_forwarder %}
+
   packet_forwarder:
     image: {{ target_pf_image }}:{{ target_pf_tag }}
     container_name: pf
@@ -28,6 +29,7 @@ services:
         tag: "{{ '{{' }}.ImageName{{ '}}' }}|{{ '{{' }}.Name{{ '}}' }}|{{ '{{' }}.ImageFullID{{ '}}' }}|{{ '{{' }}.FullID{{ '}}' }}"
 {% endif %}
 {% if enable_miner %}
+
   miner:
     image: quay.io/team-helium/miner:{{ target_miner_tag }}
     container_name: miner
@@ -56,8 +58,8 @@ services:
       options:
         tag: "{{ '{{' }}.ImageName{{ '}}' }}|{{ '{{' }}.Name{{ '}}' }}|{{ '{{' }}.ImageFullID{{ '}}' }}|{{ '{{' }}.FullID{{ '}}' }}"
 {% endif %}
-
 {% if enable_grafana_agent %}
+
   grafana-agent:
     image: grafana/agent:latest
     container_name: grafana-agent
@@ -78,6 +80,7 @@ services:
         tag: "{{ '{{' }}.ImageName{{ '}}' }}|{{ '{{' }}.Name{{ '}}' }}|{{ '{{' }}.ImageFullID{{ '}}' }}|{{ '{{' }}.FullID{{ '}}' }}"
 {% endif %}
 {% if enable_cadvisor %}
+
   cadvisor:
     image: unibaktr/cadvisor:0.39.0
     container_name: cadvisor
@@ -99,9 +102,25 @@ services:
       driver: json-file
       options:
         tag: "{{ '{{' }}.ImageName{{ '}}' }}|{{ '{{' }}.Name{{ '}}' }}|{{ '{{' }}.ImageFullID{{ '}}' }}|{{ '{{' }}.FullID{{ '}}' }}"
-  {% endif %}
+{% endif %}
+{% if enable_json_exporter %}
 
+  json-exporter:
+    image: quay.io/prometheuscommunity/json-exporter:latest
+    container_name: json-exporter
+    volumes:
+      - /home/pi/json-exporter:/etc/json-exporter
+    command: -config.file=/etc/json-exporter/config.yml
+    networks:
+      - helium
+    restart: unless-stopped
+    logging:
+      driver: json-file
+      options:
+        tag: "{{ '{{' }}.ImageName{{ '}}' }}|{{ '{{' }}.Name{{ '}}' }}|{{ '{{' }}.ImageFullID{{ '}}' }}|{{ '{{' }}.FullID{{ '}}' }}"
+{% endif %}
 {% if enable_workarounds %}
+
   helium_workarounds:
     image: ghcr.io/heliumdiy/helium_workarounds:latest
     container_name: helium_workarounds
