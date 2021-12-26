@@ -20,6 +20,12 @@
     owner: pi
     group: pi
     mode: 0644
+  register: miner_config
+
+- name: docker restart miner
+  ansible.builtin.shell: docker restart miner
+  ignore_errors: yes
+  when: miner_config.changed
 
 - name: cron job to peer with seed node
   ansible.builtin.cron:

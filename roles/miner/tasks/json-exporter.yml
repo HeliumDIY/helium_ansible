@@ -16,6 +16,6 @@
   register: json_exporter_config
 
 - name: docker restart json-exporter
-  ansible.builtin.shell: docker ps -qf name=json-exporter |grep -E '^\w+' && docker restart json-exporter
+  ansible.builtin.shell: docker restart json-exporter
   ignore_errors: yes
   when: json_exporter_config.changed
