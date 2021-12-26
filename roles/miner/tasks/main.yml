@@ -11,3 +11,6 @@
 - name: Docker Daemon Metrics
   import_tasks: docker-metrics.yml
   when: enable_docker_daemon_metrics == True
+- name: Install Tailscale
+  import_tasks: tailscale.yml
+  when: vpn_choice == "tailscale"

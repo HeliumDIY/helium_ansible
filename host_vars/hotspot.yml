@@ -5,3 +5,5 @@ target_hotspot_vendor: "cotx"
 target_miner_key: True
 target_pf_concentrator_interface: "spi" # usb
 target_pf_concentrator_model: "sx1250" # only sx1250 for now
+# Tailscale subnet to subroute traffic https://tailscale.com/kb/1019/subnets/
+tailscale_subnet_cidr: 192.168.0.1/24
