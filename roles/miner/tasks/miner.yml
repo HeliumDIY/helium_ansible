@@ -13,23 +13,13 @@
     state: directory
     mode: 0755
 
-- name: copy miner configuration files for devices with a hardware key
-  copy:
-    src: miner_config-key/sys.config
+- name: template miner configuration file
+  template:
+    src: miner/sys.config
     dest: /home/pi/miner_config/sys.config
     owner: pi
     group: pi
     mode: 0644
-  when: "target_miner_key == True"
-
-- name: copy miner configuration files for devices without a hardware key
-  copy:
-    src: miner_config-nokey/sys.config
-    dest: /home/pi/miner_config/sys.config
-    owner: pi
-    group: pi
-    mode: 0644
-  when: "target_miner_key == False"
 
 - name: cron job to peer with seed node
   ansible.builtin.cron:
