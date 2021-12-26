@@ -127,6 +127,8 @@ services:
     volumes:
       - /home/pi/miner_data/log:/log
       - /var/run/docker.sock:/var/run/docker.sock
+    environment:
+      - LOG_ONLY_FAILED={{ workarounds_log_only_failed }}
     networks:
       - helium
     restart: unless-stopped
