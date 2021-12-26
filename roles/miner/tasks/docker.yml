@@ -17,7 +17,7 @@
     name: "update miner"
     minute: "*/30"
     job: "docker-compose -f /home/pi/docker-compose.yml pull miner && docker-compose -f /home/pi/docker-compose.yml ps -q miner && docker-compose -f /home/pi/docker-compose.yml up -d miner"
-- name: cron job to update helum_workarounds
+- name: cron job to update helium_workarounds
   ansible.builtin.cron:
     name: "update workarounds"
     minute: "*/30"
