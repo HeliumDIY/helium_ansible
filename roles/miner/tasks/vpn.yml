@@ -1,8 +1,8 @@
 
 - name: Install Tailscale
   import_tasks: vpn/tailscale.yml
-  when: vpn_choice == "tailscale"
+  when: enable_tailscale == True
 
 - name: Include OpenVPN tasks
   import_tasks: vpn/openvpn.yml
-  when: openvpn_config is defined and vpn_choice == "openvpn"
+  when: openvpn_config is defined and enable_openvpn == True

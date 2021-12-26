@@ -42,7 +42,8 @@ docker_install_compose: true
 docker_users: [pi]
 docker_pip_executable: pip3
 # VPN Configuration
-vpn_choice: tailscale
+enable_tailscale: True
+enable_openvpn: True # Also need to define openvpn_config
 # Tailscale Args
 tailscale_args: "--accept-routes=true  --advertise-routes={{ tailscale_subnet_cidr}}"
 tailscale_auth_key: !vault | # Fake example encrypted by Ansible Vault
