@@ -13,8 +13,8 @@
   import_tasks: docker-metrics.yml
   when: enable_docker_daemon_metrics == True
 
-- name: Docker
-  import_tasks: docker.yml
-
 - name: VPN Client
   import_tasks: vpn.yml
+
+- name: Docker
+  import_tasks: docker.yml
