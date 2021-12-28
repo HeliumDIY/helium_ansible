@@ -45,7 +45,11 @@ services:
     cap_add:
       - SYS_RAWIO
     devices:
+{% if target_hotspot_vendor == "pisces" %}
+      - /dev/i2c-0:/dev/i2c-1
+{% else %}
       - /dev/i2c-1:/dev/i2c-1
+{% endif %}
     networks:
       - helium
     ulimits:
