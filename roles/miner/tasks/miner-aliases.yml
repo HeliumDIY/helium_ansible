@@ -1,0 +1,33 @@
+- name: create miner_aliases directory
+  file:
+    path: /home/pi/miner_aliases
+    state: directory
+    owner: pi
+    group: pi
+    mode: 0755
+
+- name: create .bash_aliases
+  copy:
+    src: miner_aliases/.bash_aliases
+    dest: /home/pi/.bash_aliases
+    owner: pi
+    group: pi
+    mode: 0644
+  register: bash_aliases_file
+
+- name: create /home/pi/miner_aliases/miner_aliases
+  copy:
+    src: miner_aliases/miner_aliases
+    dest: /home/pi/miner_aliases/miner_aliases
+    owner: pi
+    group: pi
+    mode: 0644
+    force: yes
+  register: miner_aliases_file
+
+- name: Source .bash_aliases
+  command: source /home/pi/.bash_aliases
+  failed_when: false
+  changed_when: false
+  check_mode: false
+  register: check_bash_aliases_result
