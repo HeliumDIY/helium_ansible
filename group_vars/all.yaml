@@ -55,4 +55,4 @@ tailscale_auth_key: !vault | # Fake example encrypted by Ansible Vault
           6539646561373535610a643334396234396332376431326565383432626232383131303131363362
           3537
 # Aliases
-enable_miner_aliases: True
+enable_miner_aliases: False
