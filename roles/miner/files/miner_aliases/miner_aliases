@@ -1,6 +1,6 @@
-alias tc="tail /home/pi/miner_data/log/console.log -f"    # Tail Helium Miner Console Log
-alias tcr="tail /home/pi/miner_data/log/crash.log -f"     # Tail Helium Miner Crash Log
-alias te="tail /home/pi/miner_data/log/error.log -f"      # Tail Helium Miner Error Log
+alias tc="tail /home/pi/miner_data/log/console.log -F"    # Tail Helium Miner Console Log
+alias tcr="tail /home/pi/miner_data/log/crash.log -F"     # Tail Helium Miner Crash Log
+alias te="tail /home/pi/miner_data/log/error.log -F"      # Tail Helium Miner Error Log
 alias sz="source /home/pi/.bashrc"                        # Source .bashrc
 alias pfl="docker logs --timestamps pf -f"                # Tail Packet Forwarder Logs
 alias wl="docker logs --timestamps helium_workarounds -f" # Tail Workaround Logs
