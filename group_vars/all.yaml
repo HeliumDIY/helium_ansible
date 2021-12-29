@@ -13,6 +13,7 @@ workarounds_log_only_failed: True
 enable_node_exporter: False
 enable_grafana_agent: True
 enable_json_exporter: True
+target_json_exporter_sha256: e27a2fbbcf6c8cb3ca52e0b19d630edebbc1f956660ca1cd540b4e9690b430fa ## Arm64
 target_loki_server: "http://1.2.3.4:3100/loki/api/v1/push" # Needed by the Grafana Agent to Ship Logs to Loki
 prometheus_remote_write_endpoint: "" # Needed by the Grafana Agent to Ship Metrics to Prometheus
 prometheus_remote_write_username: "" # Needed by the Grafana Agent to Ship Metrics to Prometheus
