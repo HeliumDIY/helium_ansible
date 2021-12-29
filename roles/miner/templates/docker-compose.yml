@@ -110,7 +110,7 @@ services:
 {% if enable_json_exporter %}
 
   json-exporter:
-    image: quay.io/prometheuscommunity/json-exporter:latest
+    image: quay.io/prometheuscommunity/json-exporter:master
     container_name: json-exporter
     volumes:
       - /home/pi/json-exporter:/etc/json-exporter
