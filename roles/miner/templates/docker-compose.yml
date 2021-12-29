@@ -114,7 +114,7 @@ services:
     container_name: json-exporter
     volumes:
       - /home/pi/json-exporter:/etc/json-exporter
-    command: -config.file=/etc/json-exporter/config.yml
+    command: --config.file=/etc/json-exporter/config.yml
     networks:
       - helium
     restart: unless-stopped
