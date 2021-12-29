@@ -14,6 +14,7 @@
       - neovim
       - locales-all
       - neofetch
+      - python3-pip
       - jq # JSON cli processor for Height Helper
       - bc # Basic Calculator for Height Helper
 - name: install docker dependancies

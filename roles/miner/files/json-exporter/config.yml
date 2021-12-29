@@ -38,4 +38,3 @@ metrics:
 body:
   content: |
     {"jsonrpc":"2.0","id":"id","method":"info_summary","params":[]}
-

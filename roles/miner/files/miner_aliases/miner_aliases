@@ -1,0 +1,28 @@
+function _info_summary() {
+    curl -d '{"jsonrpc":"2.0","id":"id","method":"info_summary","params":[]}' -s -o - http://localhost:4467/ | jq .
+}
+function _miner_height() {
+    curl -s -A "Wget/1.12 (linux-gnu)" https://helium-api.stakejoy.com/v1/blocks/height | jq '.data.height'
+}
+
+function _blockchain_height() {
+    curl -s -A "Wget/1.12 (linux-gnu)" https://helium-api.stakejoy.com/v1/blocks/height | jq '.data.height'
+}
+
+function _height_helper() {
+    bash /home/pi/miner_scripts/height-helper.sh
+}
+alias sz="source /home/pi/.bashrc"                                                          # Source .bashrc
+alias tlogs="tail -F /home/pi/miner_data/log/*.log"                                         # Tail Miner logs
+alias tconsole="tail -F /home/pi/miner_data/log/console.log"                                # Tail Helium Miner Console Log
+alias tcrash="tail -F /home/pi/miner_data/log/crash.log"                                    # Tail Helium Miner Crash Log
+alias terr="tail -F /home/pi/miner_data/log/error.log"                                      # Tail Helium Miner Error Log
+alias pfl="docker logs --timestamps pf -f"                                                  # Tail Packet Forwarder Logs
+alias wl="docker logs --timestamps helium_workarounds -f"                                   # Tail Workaround Logs
+alias height_helper="_height_helper"                                                        # Helium Height Helper Script
+alias hh="_height_helper"                                                                   # Helium Height Helper Script"
+alias fast_sync="bash /home/pi/miner_scripts/fast-sync.sh"                                  # Fast Sync script
+alias info_summary="_info_summary"                                                          # Shows miner info
+alias miner_height="_miner_height"                                                          # Shows miner height
+alias blockchain_height="_blockchain_height"                                                # Shows blockchain height
+alias drestart="docker-compose -f /home/pi/docker-compose.yml down && docker-compose up -d" # Restart Docker Compose
