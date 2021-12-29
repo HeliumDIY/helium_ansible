@@ -110,7 +110,7 @@ services:
 {% if enable_json_exporter %}
 
   json-exporter:
-    image: quay.io/prometheuscommunity/json-exporter:latest
+    image: quay.io/prometheuscommunity/json-exporter:master
     container_name: json-exporter
     volumes:
       - /home/pi/json-exporter:/etc/json-exporter
@@ -118,10 +118,13 @@ services:
     networks:
       - helium
     restart: unless-stopped
+    ports:
+      - "7979:7979"
     logging:
       driver: json-file
       options:
         tag: "{{ '{{' }}.ImageName{{ '}}' }}|{{ '{{' }}.Name{{ '}}' }}|{{ '{{' }}.ImageFullID{{ '}}' }}|{{ '{{' }}.FullID{{ '}}' }}"
+
 {% endif %}
 {% if enable_workarounds %}
 
