@@ -124,8 +124,8 @@ metrics:
       scrape_configs:
         - job_name: miner-exporter
           metrics_path: /probe
-          scrape_interval: 15m
-          scrape_timeout: 30s
+          scrape_interval: 60s
+          scrape_timeout: 45s
           static_configs:
             - targets: ["http://miner:4467/"]
           relabel_configs:
