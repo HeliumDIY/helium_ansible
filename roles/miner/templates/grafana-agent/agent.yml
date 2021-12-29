@@ -72,8 +72,8 @@ metrics:
   wal_cleanup_age: 12h
   wal_cleanup_period: 30m
   global:
-    scrape_interval: 15s
-    scrape_timeout: 5s
+    scrape_interval: 1m
+    scrape_timeout: 15s
     external_labels:
       miner: {{ target_hostname }}
     remote_write:
