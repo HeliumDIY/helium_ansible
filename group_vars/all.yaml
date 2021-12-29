@@ -12,7 +12,7 @@ workarounds_log_only_failed: True
 #Loki & Prometheus
 enable_node_exporter: False
 enable_grafana_agent: True
-enable_json_exporter: False
+enable_json_exporter: True
 target_loki_server: "http://1.2.3.4:3100/loki/api/v1/push" # Needed by the Grafana Agent to Ship Logs to Loki
 prometheus_remote_write_endpoint: "" # Needed by the Grafana Agent to Ship Metrics to Prometheus
 prometheus_remote_write_username: "" # Needed by the Grafana Agent to Ship Metrics to Prometheus
@@ -54,3 +54,5 @@ tailscale_auth_key: !vault | # Fake example encrypted by Ansible Vault
           37373734653036613133613533376139383138613164323661386362376335316364653037353631
           6539646561373535610a643334396234396332376431326565383432626232383131303131363362
           3537
+# Aliases
+enable_miner_aliases: False

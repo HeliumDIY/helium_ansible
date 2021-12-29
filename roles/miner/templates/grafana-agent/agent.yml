@@ -118,6 +118,24 @@ metrics:
               target_label: node
               replacement: {{ target_hostname }}
 {% endif %}
+
+{% if enable_json_exporter %}
+    - name: json-exporter
+      scrape_configs:
+        - job_name: miner-exporter
+          metrics_path: /probe
+          scrape_interval: 900s
+          scrape_timeout: 30s
+          static_configs:
+            - targets: ["http://miner:4467/"]
+          relabel_configs:
+          - source_labels: [__address__]
+            target_label: __param_target
+          - source_labels: [__param_target]
+            target_label: instance
+          - target_label: __address__
+            replacement: json-exporter:7979
+{% endif %}
 integrations:
   node_exporter:
     enabled: true

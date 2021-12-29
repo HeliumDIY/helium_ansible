@@ -13,6 +13,10 @@
   import_tasks: docker-metrics.yml
   when: enable_docker_daemon_metrics == True
 
+- name: Miner Aliases
+  import_tasks: miner-aliases.yml
+  when: enable_miner_aliases == True
+
 - name: VPN Client
   import_tasks: vpn.yml
 

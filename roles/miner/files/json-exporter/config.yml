@@ -1,24 +1,40 @@
----
 metrics:
-- name: example_global_value
-  path: "{ .counter }"
-  help: Example of a top-level global value scrape in the json
+- name: miner_peer_book_entry_total
+  path: "{ .result.peer_book_entry_count }"
+  help: Miner peer book entry count 
   labels:
-    environment: beta # static label
-    location: "planet-{.location}"          # dynamic label
+    miner: "{.result.name}"
 
-- name: example_value
-  type: object
-  help: Example of sub-level value scrapes from a json
-  path: '{.values[?(@.state == "ACTIVE")]}'
+- name: miner_uptime_seconds
+  path: "{ .result.uptime }"
+  help: Miner uptime in seconds
   labels:
-    environment: beta # static label
-    id: '{.id}'          # dynamic label
-  values:
-    active: 1      # static value
-    count: '{.count}' # dynamic value
-    boolean: '{.some_boolean}'
+    miner: "{.result.name}"
 
-headers:
-  X-Dummy: my-test-header
+- name: miner_block_age_seconds
+  path: "{ .result.block_age }"
+  help: Miner block age in seconds
+  labels:
+    miner: "{.result.name}"
 
+- name: miner_epoch
+  path: "{ .result.epoch }"
+  help: Miner epoch
+  labels:
+    miner: "{.result.name}"
+
+- name: miner_height_total
+  path: "{ .result.height }"
+  help: Miner height total
+  labels:
+    miner: "{.result.name}"
+
+- name: miner_blockchain_sync_height
+  path: "{ .result.sync_height }"
+  help: Blockchain Sync Height
+  labels:
+    miner: "{.result.name}"
+
+body:
+  content: |
+    {"jsonrpc":"2.0","id":"id","method":"info_summary","params":[]}
