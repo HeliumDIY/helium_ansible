@@ -1,5 +1,6 @@
 ---
-- hosts: hotspot
+- name: Setup Raspberry Pi with Miner Software
+  hosts: all
   roles:
     - rpi
     - miner
