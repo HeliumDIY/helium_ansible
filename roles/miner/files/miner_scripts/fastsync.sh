@@ -13,4 +13,3 @@ else
         echo "Current miner height of ${MINER_HEIGHT} greater than the latest snapshot at ${SNAP_HEIGHT}"
         exit 1
 fi
-

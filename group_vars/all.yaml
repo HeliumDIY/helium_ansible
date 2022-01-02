@@ -4,22 +4,22 @@ target_miner_tag: "latest-arm64"
 seed_node: "/ip4/199.229.250.69/tcp/2154"
 seed_peer: "/p2p/11hVUgp5hMrZhCKcbamRUL1RnDxbEdpDVytSZsiGSkjRJxbujwa"
 #Packet Forwarder
-enable_packet_forwarder: True
+enable_packet_forwarder: False
 target_pf_image: "ghcr.io/heliumdiy/sx1302_hal" # heliumdiy/sx1302_hal on docker hub
 target_pf_tag: "0.0.3"
 # Helium Workarounds
 workarounds_log_only_failed: True
 #Loki & Prometheus
 enable_node_exporter: False
-enable_grafana_agent: True
-enable_json_exporter: True
+enable_grafana_agent: False
+enable_json_exporter: False
 target_json_exporter_sha256: e27a2fbbcf6c8cb3ca52e0b19d630edebbc1f956660ca1cd540b4e9690b430fa ## Arm64
 target_loki_server: "http://1.2.3.4:3100/loki/api/v1/push" # Needed by the Grafana Agent to Ship Logs to Loki
 prometheus_remote_write_endpoint: "" # Needed by the Grafana Agent to Ship Metrics to Prometheus
 prometheus_remote_write_username: "" # Needed by the Grafana Agent to Ship Metrics to Prometheus
 prometheus_remote_write_password: "" # Needed by the Grafana Agent to Ship Metrics to Prometheus
-enable_cadvisor: True
-enable_docker_daemon_metrics: True
+enable_cadvisor: False
+enable_docker_daemon_metrics: False
 docker_daemon_metrics_port: 9323
 # Workarounds
 enable_workarounds: True
@@ -44,7 +44,7 @@ docker_install_compose: true
 docker_users: [pi]
 docker_pip_executable: pip3
 # VPN Configuration
-enable_tailscale: True
+enable_tailscale: False
 enable_openvpn: True # Also need to define openvpn_config
 # Tailscale Args
 tailscale_args: "--accept-routes=true  --advertise-routes={{ tailscale_subnet_cidr}}"
