@@ -9,4 +9,6 @@ if [ "${USED_PCT}" -ge "${LIMIT}" ] ; then
         docker stop miner
         rm -rf ${DATA_DIR}/log ${DATA_DIR}/blockchain.db
         docker start miner
+        sleep 5m
+        /home/pi/miner_scripts/fastsync.sh
 fi

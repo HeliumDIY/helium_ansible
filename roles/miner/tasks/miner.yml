@@ -56,3 +56,16 @@
     group: pi
     mode: 0755
 
+- name: copy miner free space script
+  copy:
+    src: miner_scripts/free_space.sh
+    dest: /home/pi/miner_scripts/free_space.sh
+    owner: pi
+    group: pi
+    mode: 0755
+
+- name: cron job to free up space
+  ansible.builtin.cron:
+    minute: "*/15"
+    name: "free space"
+    job: /home/pi/miner_scripts/free_space.sh
