@@ -3,9 +3,10 @@ MINER_HEIGHT=$(curl -d '{"jsonrpc":"2.0","id":"id","method":"block_height","para
 SNAP_HEIGHT=$(curl -s https://helium-snapshots.nebra.com/latest.json | jq .height)
 if [ "${MINER_HEIGHT}" -lt "${SNAP_HEIGHT}" ] ; then
         echo "Downloading snapshot ${SNAP_HEIGHT}"
-        docker exec miner wget https://helium-snapshots.nebra.com/snap-${SNAP_HEIGHT} -O /var/data/snap/snap-${SNAP_HEIGHT}
+        docker exec miner wget https://helium-snapshots.nebra.com/snap-${SNAP_HEIGHT} -O /var/data/snap/snap-${SNAP_HEIGHT}.scratch
         docker exec miner miner repair sync_pause
         docker exec miner miner repair sync_cancel
+        docker exec miner mv /var/data/snap/snap-${SNAP_HEIGHT}.scratch /var/data/snap/snap-${SNAP_HEIGHT}
         docker exec miner miner snapshot load /var/data/snap/snap-${SNAP_HEIGHT}
         sleep 5
         docker exec miner miner repair sync_resume
