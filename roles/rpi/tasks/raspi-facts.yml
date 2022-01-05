@@ -95,6 +95,14 @@
   tags:
     - raspi
 
+- name: get I2C0 enabled status
+  shell: "raspi-config nonint get_config_var dtparam=i2c_vc /boot/config.txt"
+  register: raspi_i2c0_disabled
+  changed_when: False
+  check_mode: no
+  tags:
+    - raspi
+
 - name: get serial enabled status
   shell: "raspi-config nonint get_serial"
   register: raspi_serial_disabled
@@ -190,6 +198,7 @@
     raspi_vnc_enabled: "{{ raspi_vnc_disabled.stdout == '0' and 'find' not in raspi_vnc_disabled.stderr and 'found' not in raspi_vnc_disabled.stderr }}"
     raspi_spi_enabled: "{{ raspi_spi_disabled.stdout == '0' }}"
     raspi_i2c_enabled: "{{ raspi_i2c_disabled.stdout == '0' }}"
+    raspi_i2c0_enabled: "{{ raspi_i2c0_disabled.stdout == 'on' }}"
     raspi_serial_enabled: "{{ raspi_serial_disabled.stdout == '0' }}"
     raspi_serial_hw_enabled: "{{ raspi_serial_hw_disabled.stdout == '0' }}"
     raspi_onewire_enabled: "{{ raspi_onewire_disabled.stdout == '0' }}"
