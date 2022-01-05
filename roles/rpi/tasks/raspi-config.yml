@@ -59,15 +59,15 @@
   tags:
     - raspi
 
-- name: enable/disable serial
-  command: "raspi-config nonint do_serial {{ 0 if enable_serial else 1 }}"
-  when: "enable_serial | default(false) and enable_serial != raspi_serial_enabled"
+- name: enable/disable I2C0
+  command: "raspi-config nonint set_config_var dtparam=i2c_vc {% if enable_i2c %}on{% else %}off{% endif %} /boot/config.txt"
+  when: "enable_i2c | default(false) and enable_i2c != raspi_i2c0_enabled"
   tags:
     - raspi
 
-- name: enable/disable hardware serial
-  command: "raspi-config nonint do_serial_hw {{ 0 if enable_serial_hw else 1 }}"
-  when: "enable_serial_hw | default(false) and enable_serial_hw != raspi_serial_hw_enabled"
+- name: enable/disable serial
+  command: "raspi-config nonint do_serial {{ 2 if enable_serial else 1 }}"
+  when: "enable_serial | default(false) and enable_serial != raspi_serial_enabled"
   tags:
     - raspi
 
