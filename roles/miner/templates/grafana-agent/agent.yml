@@ -6,7 +6,11 @@ logs:
 
       clients:
         - url: {{ target_loki_server }}
-
+{% if target_loki_username and target_loki_password %}
+          basic_auth:
+            username: "{{ target_loki_username }}"
+            password: "{{ target_loki_password }}"
+{% endif %}
       scrape_configs:
       - job_name: system
         static_configs:
