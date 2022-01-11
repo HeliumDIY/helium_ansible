@@ -17,6 +17,7 @@
       - python3-pip
       - jq # JSON cli processor for Height Helper
       - bc # Basic Calculator for Height Helper
+      - bat
 - name: install docker dependancies
   apt:
     name: "{{item}}"
