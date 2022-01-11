@@ -1,3 +1,5 @@
+#!/usr/bin/env bash
+
 function _info_summary() {
     curl -d '{"jsonrpc":"2.0","id":"id","method":"info_summary","params":[]}' -s -o - http://localhost:4467/ | jq .
 }
@@ -26,3 +28,5 @@ alias info_summary="_info_summary"                                              
 alias miner_height="_miner_height"                                                          # Shows miner height
 alias blockchain_height="_blockchain_height"                                                # Shows blockchain height
 alias drestart="docker-compose -f /home/pi/docker-compose.yml down && docker-compose up -d" # Restart Docker Compose
+alias bat="batcat"                                                                          # Batcat
+alias pfrestart="docker-compose -f /home/pi/docker-compose.yml restart packet_forwarder"    # Restart Packet Forwarder
