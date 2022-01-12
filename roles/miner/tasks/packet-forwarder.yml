@@ -9,7 +9,7 @@
 - name: copy packet forwarder config file
   ansible.builtin.copy:
     src: "{{packet_forwarder_config_file_path}}"
-    dest: /home/pi/pf/custom_conf.json
+    dest: /home/pi/pf/local_conf.json
     owner: pi
   register: pf_config
 
