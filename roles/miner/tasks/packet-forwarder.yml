@@ -1,0 +1,19 @@
+- name: create grafana agent directory
+  file:
+    path: /home/pi/pf
+    state: directory
+    owner: pi
+    group: pi
+    mode: 0755
+
+- name: copy packet forwarder config file
+  ansible.builtin.copy:
+    src: "{{packet_forwarder_config_file_path}}"
+    dest: /home/pi/pf/custom_conf.json
+    owner: pi
+  register: pf_config
+
+- name: docker restart packet-forwarder
+  ansible.builtin.shell: docker restart pf
+  ignore_errors: yes
+  when: pf_config.changed

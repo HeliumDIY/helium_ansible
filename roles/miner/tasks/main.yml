@@ -22,3 +22,7 @@
 
 - name: Docker
   import_tasks: docker.yml
+
+- name: Packet Forwarder
+  import_tasks: packet-forwarder.yml
+  when: packet_forwarder_config_file_path is defined
