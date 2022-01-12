@@ -6,7 +6,7 @@ logs:
 
       clients:
         - url: {{ target_loki_server }}
-{% if target_loki_username and target_loki_password %}
+{% if target_loki_username is defined and target_loki_password is defined %}
           basic_auth:
             username: "{{ target_loki_username }}"
             password: "{{ target_loki_password }}"
