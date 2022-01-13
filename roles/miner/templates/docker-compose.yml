@@ -11,6 +11,9 @@ services:
       - REGION={{ target_miner_region }}
       - CONCENTRATOR_INTERFACE={{ target_pf_concentrator_interface }}
       - CONCENTRATOR_MODEL={{ target_pf_concentrator_model }}
+{% if packet_forwarder_config_file_path %}
+      - CONFIG_FILE=/opt/packet_forwarder/configs/local_conf.json
+{% endif %}
     volumes:
       - /home/pi/pf:/opt/packet_forwarder/configs
       - /sys/class/gpio:/sys/class/gpio
