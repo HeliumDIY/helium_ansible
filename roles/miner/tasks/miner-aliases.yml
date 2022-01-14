@@ -27,3 +27,4 @@
 - name: Source .bash_aliases
   ansible.builtin.shell: source /home/pi/.bash_aliases
   when: bash_aliases_file.changed
+  allow_fail: true
