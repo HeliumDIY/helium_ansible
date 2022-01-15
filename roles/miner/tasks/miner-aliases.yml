@@ -23,8 +23,3 @@
     group: pi
     mode: 0644
   register: miner_aliases_file
-
-- name: Source .bash_aliases
-  ansible.builtin.shell: source /home/pi/.bash_aliases
-  when: bash_aliases_file.changed
-  allow_fail: true
