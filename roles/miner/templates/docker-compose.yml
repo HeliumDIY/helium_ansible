@@ -134,8 +134,6 @@ services:
     volumes:
       - /home/pi/json-exporter:/etc/json-exporter
     command: --config.file=/etc/json-exporter/config.yml
-    networks:
-      - helium
     restart: unless-stopped
 {% if use_host_networking is defined and use_host_networking == True %}
     network_mode: host
