@@ -22,8 +22,12 @@ services:
       - /dev/spidev0.1:/dev/spidev0.1
     cap_add:
       - SYS_RAWIO
+{% if use_host_networking is defined and use_host_networking == True %}
+    network_mode: host
+{% else %}
     networks:
       - helium
+{% endif %}
     privileged: true
     restart: unless-stopped  
     logging:
@@ -38,10 +42,16 @@ services:
     container_name: miner
     environment:
       - REGION_OVERRIDE={{ target_miner_region }}
+{% if use_host_networking is defined and use_host_networking == True %}
+    network_mode: host
+{% else %}
+    networks:
+      - helium
     ports:
       - "44158:44158/tcp"
       - "1680:1680/udp"
       - "4467:4467/tcp"
+{% endif %}
     volumes:
       - /home/pi/miner_data:/var/data
       - /home/pi/miner_config/sys.config:/config/sys.config
@@ -53,8 +63,6 @@ services:
 {% else %}
       - /dev/i2c-1:/dev/i2c-1
 {% endif %}
-    networks:
-      - helium
     ulimits:
       nofile:
         soft: 64000
@@ -78,8 +86,12 @@ services:
       - /sys:/host/sys:ro,rslave # sys / node_exporter
       - /proc:/host/proc:ro,rslave #processes / node_exporter
     command: -config.file=/etc/agent/agent.yml -config.expand-env=true
+{% if use_host_networking is defined and use_host_networking == True %}
+    network_mode: host
+{% else %}
     networks:
       - helium
+{% endif %}
     restart: unless-stopped
     logging:
       driver: json-file
@@ -100,10 +112,14 @@ services:
         - /etc/machine-id/:/etc/machine-id:ro
     devices:
         - /dev/kmsg:/dev/kmsg:ro
-    ports:
-        - "8080:8080"
+{% if use_host_networking is defined and use_host_networking == True %}
+    network_mode: host
+{% else %}
     networks:
       - helium
+    ports:
+        - "8080:8080"
+{% endif %}        
     restart: unless-stopped
     logging:
       driver: json-file
@@ -121,8 +137,14 @@ services:
     networks:
       - helium
     restart: unless-stopped
+{% if use_host_networking is defined and use_host_networking == True %}
+    network_mode: host
+{% else %}
+    networks:
+      - helium
     ports:
-      - "7979:7979"
+    - "7979:7979"   
+{% endif %}  
     logging:
       driver: json-file
       options:
@@ -139,8 +161,12 @@ services:
       - /var/run/docker.sock:/var/run/docker.sock
     environment:
       - LOG_ONLY_FAILED={{ workarounds_log_only_failed }}
+{% if use_host_networking is defined and use_host_networking == True %}
+    network_mode: host
+{% else %}
     networks:
       - helium
+{% endif %}  
     restart: unless-stopped
     logging:
       driver: json-file
