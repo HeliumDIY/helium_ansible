@@ -171,10 +171,12 @@ services:
       options:
         tag: "{{ '{{' }}.ImageName{{ '}}' }}|{{ '{{' }}.Name{{ '}}' }}|{{ '{{' }}.ImageFullID{{ '}}' }}|{{ '{{' }}.FullID{{ '}}' }}"
 {% endif %}
-
+{% if use_host_networking is defined and use_host_networking == True %}
+{% else %}
 networks:
   helium:
    driver: bridge
    ipam:
     config:
      - subnet: 172.16.57.0/24
+{% endif %}
