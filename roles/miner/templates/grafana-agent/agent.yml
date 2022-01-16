@@ -93,8 +93,8 @@ metrics:
           scrape_interval: 20s
           scrape_timeout: 10s
           static_configs:
-            {% if use_host_networking is defined and use_host_networking == True %}
-            - targets: ["http://localhost:8080"]
+{% if use_host_networking is defined and use_host_networking == True %}
+            - targets: ["localhost:8080"]
 {% else %}
             - targets: ["cadvisor:8080"]
 {% endif %}
@@ -116,7 +116,7 @@ metrics:
           scrape_timeout: 10s
           static_configs:
 {% if use_host_networking is defined and use_host_networking == True %}
-            - targets: ["http://localhost:{{ docker_daemon_metrics_port }}"]
+            - targets: ["localhost:{{ docker_daemon_metrics_port }}"]
 {% else %}
              - targets: ["host.docker.internal:{{ docker_daemon_metrics_port }}"]
 {% endif %}
@@ -150,7 +150,11 @@ metrics:
           - source_labels: [__param_target]
             target_label: instance
           - target_label: __address__
+{% if use_host_networking is defined and use_host_networking == True %}
+            replacement: localhost:7979
+{% else %}
             replacement: json-exporter:7979
+{% endif %}  
 {% endif %}
 integrations:
   node_exporter:
