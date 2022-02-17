@@ -9,7 +9,7 @@
   register: docker_compose
 
 - name: docker-compose up
-  ansible.builtin.shell: docker-compose -f /home/pi/docker-compose.yml up -d --remove-orphans
+  shell: docker-compose -f /home/pi/docker-compose.yml up -d --remove-orphans
   when: docker_compose.changed
 
 - name: cron job to update miner
