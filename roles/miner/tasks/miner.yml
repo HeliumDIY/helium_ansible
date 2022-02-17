@@ -23,7 +23,7 @@
   register: miner_config
 
 - name: docker restart miner
-  ansible.builtin.shell: docker restart miner
+  shell: docker restart miner
   ignore_errors: yes
   when: miner_config.changed
 

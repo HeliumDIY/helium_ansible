@@ -14,6 +14,6 @@
   register: pf_config
 
 - name: docker restart packet-forwarder
-  ansible.builtin.shell: docker restart pf
+  shell: docker restart pf
   ignore_errors: yes
   when: pf_config.changed

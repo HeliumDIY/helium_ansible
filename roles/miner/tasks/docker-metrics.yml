@@ -10,7 +10,7 @@
   register: docker_metrics_daemon_json
 
 - name: Restart Docker daemon
-  ansible.builtin.shell: systemctl restart docker
+  shell: systemctl restart docker
   become: true
   when: docker_metrics_daemon_json.changed
 
