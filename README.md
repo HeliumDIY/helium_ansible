@@ -6,7 +6,9 @@ ansible playbooks for managing helium hotspots
 
 ### Ubuntu
 
+```
 sudo apt-get install ansible sshpass
+```
 
 ## Miner Setup
 
@@ -39,9 +41,27 @@ all:
           ansible_become: true
 ```
 
+### Configure host_vars/hotspot.yml
 
+```
+target_hostname: "hotspot-animal-name"		# your hotspot name
+target_domain: "local"				# 
+target_hotspot_vendor: "cotx"			# cotx or pisces or rakv2
+target_miner_key: True				# 
+target_pf_concentrator_interface: "spi"		# usb
+target_pf_concentrator_model: "sx1250"		# only sx1250 for now
+# Tailscale subnet to subroute traffic https://tailscale.com/kb/1019/subnets/
+#tailscale_subnet_cidr: 192.168.0.1/24
+```
 
-## Run ansible
+### Configure OpenVPN (optional)
+
+Turn openvpn on in group_vars/all.yaml
+```
+enable_openvpn: True # Also need to define openvpn_config
+```
+
+### Configure Tailscale (optional)
 
 If you wish to use tailscale, please install the dependencies:
 ```
@@ -50,16 +70,58 @@ ansible-galaxy install -r requirements.yml
 
 Then change enable_tailscale: True in group_vars/all.yml
 
+## Run ansible
+
 Install everything on your miner
 ```
 ansible-playbook -i hosts.yml rpi.yml
 ```
 
+## Check if miner is running
+
+This gives a lot of interesting information
+```
+ssh pi@<ip>
+docker exec miner miner info summary
+```
+
+If you want specific things you can see a list of options by running
+```
+$ docker exec miner miner info
+Usage: miner info commands
+
+  info height            - Get height of the blockchain for this miner.
+  info in_consensus      - Show if this miner is in the consensus_group.
+  info name              - Shows the name of this miner.
+  info block_age         - Get age of the latest block in the chain, in seconds.
+  info p2p_status        - Shows key peer connectivity status of this miner.
+  info onboarding        - Get manufacturing and staking details for this miner.
+  info summary           - Get a collection of key data points for this miner.
+  info region            - Get the operatating region for this miner.
+pi@my-hot-spot:~ $ docker exec miner miner info summary
+
+```
+
+## Configure wallet
+
+This will ask you to enter your 12 words and then you can use the cli wallet to manage the hotspot
+HELIUM_WALLET_PASSWORD='wallet password' helium-wallet create basic --seed mobile -o ~/helium/keys/${hotspot}.key
+
+to assert.
+HELIUM_WALLET_PASSWORD='wallet password' helium-wallet --format json -f ${key_file} hotspots assert --gateway ${hotspot_address} --gain=${gain} --elevation=${elevation} --lat=${lat} --lon=${lon} --commit
 
 ## Issues
 
-"+ sh -c DEBIAN_FRONTEND=noninteractive apt-get install -y -qq --no-install-recommends  docker-ce-cli docker-ce >/dev/null", "E: Sub-process /usr/bin/dpkg returned an error code (1)"]
+You can join #diy-packet-fowarder on https://discord.com/invite/helium
 
+
+### Docker gave this error and fidgeting with it fixed it
+
+```
+"+ sh -c DEBIAN_FRONTEND=noninteractive apt-get install -y -qq --no-install-recommends  docker-ce-cli docker-ce >/dev/null", "E: Sub-process /usr/bin/dpkg returned an error code (1)"]
+```
+
+```
 ssh pi@<ip>
 sudo systemctl restart systemd-networkd.service
 sudo apt remove docker-ce
@@ -67,3 +129,4 @@ sudo apt install docker.io
 sudo enable docker
 sudo reboot now
 Run ansible-playbook again
+```
