@@ -3,12 +3,20 @@ enable_miner: True
 target_miner_tag: "latest-arm64"
 seed_node: "/ip4/199.229.250.69/tcp/2154"
 seed_peer: "/p2p/11hVUgp5hMrZhCKcbamRUL1RnDxbEdpDVytSZsiGSkjRJxbujwa"
+#Disco client
+enable_disco_client: True
+target_disco_image: "ghcr.io/gradoj/discoclient" 
+target_disco_tag: "v0.0.7"
+#chirpstack multiplexer
+enable_packet_mux: True
+target_mux_image: "" 
+target_mux_tag: ""
 #Packet Forwarder
-enable_packet_forwarder: False
+enable_packet_forwarder: True
 target_pf_image: "ghcr.io/heliumdiy/sx1302_hal" # heliumdiy/sx1302_hal on docker hub
 target_pf_tag: "0.0.8"
 # Helium Workarounds
-workarounds_log_only_failed: True
+workarounds_log_only_failed: False
 #Loki & Prometheus
 enable_node_exporter: False
 enable_grafana_agent: False
@@ -22,7 +30,7 @@ enable_cadvisor: False
 enable_docker_daemon_metrics: False
 docker_daemon_metrics_port: 9323
 # Workarounds
-enable_workarounds: True
+enable_workarounds: False
 # Raspberry Pi Configuration
 enable_gui: False
 enable_autologin: False
@@ -45,7 +53,7 @@ docker_users: [pi]
 docker_pip_executable: pip3
 # VPN Configuration
 enable_tailscale: False
-enable_openvpn: True # Also need to define openvpn_config
+enable_openvpn: False # Also need to define openvpn_config
 # Tailscale Args
 tailscale_args: "--accept-routes=true  --advertise-routes={{ tailscale_subnet_cidr}}"
 tailscale_auth_key: !vault | # Fake example encrypted by Ansible Vault

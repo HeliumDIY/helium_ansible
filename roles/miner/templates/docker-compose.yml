@@ -1,6 +1,39 @@
 ---
 version: "2.1"
 services:
+{% if enable_disco_client %}
+  disco:
+    image: ghcr.io/gradoj/discoclient:latest
+    container_name: disco
+    networks:
+      - helium
+    expose:
+      - 1681/udp
+    command: python /disco.py -n ${NUM:-6} -d ${DELAY:-5} -p ${PAYLOAD:-30} -i ${INTERVAL:-120}
+    ports:
+      - "1681:1681/udp"
+    volumes:
+      - /home/pi/disco/disco.json:/disco.json
+{% endif %}
+{% if enable_packet_mux %}
+  chirpstack-packet-multiplexer:
+    image: chirpstack-packet-multiplexer:latest
+    container_name: mux
+    build:
+      context: https://github.com/brocaar/chirpstack-packet-multiplexer.git#v3.1.0
+    networks:
+      - helium
+    expose:
+      - 1700/udp
+    ports:
+      - 1700:1700/udp
+    entrypoint: /root/build/chirpstack-packet-multiplexer
+    volumes:
+      - /home/pi/chirpstack-packet-multiplexer/config/chirpstack-packet-multiplexer.toml:/etc/chirpstack-packet-multiplexer/chirpstack-packet-multiplexer.toml
+    restart: unless-stopped
+{% endif %}
+
+
 {% if enable_packet_forwarder %}
 
   packet_forwarder:

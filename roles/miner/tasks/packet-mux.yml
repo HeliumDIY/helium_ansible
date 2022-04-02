@@ -1,0 +1,19 @@
+- name: create packet mux directory
+  file:
+    path: /home/pi/chirpstack-packet-mulitplexer
+    state: directory
+    owner: pi
+    group: pi
+    mode: 0755
+
+- name: copy mux config file
+  ansible.builtin.copy:
+    src: ./chirpstack-packet-multiplexer.toml
+    dest: /home/pi/chirpstack-packet-multiplexer/config/chirpstack-packet-multiplexer.toml
+    owner: pi
+  register: mux_config
+
+- name: docker restart mux
+  shell: docker restart mux
+  ignore_errors: yes
+  when: mux_config.changed

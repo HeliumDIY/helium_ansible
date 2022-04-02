@@ -1,0 +1,19 @@
+- name: create disco client directory
+  file:
+    path: /home/pi/disco
+    state: directory
+    owner: pi
+    group: pi
+    mode: 0755
+
+- name: copy disco client config file
+  ansible.builtin.copy:
+    src: "./disco.json"
+    dest: /home/pi/disco/disco.json
+    owner: pi
+  register: disco_config
+
+- name: docker restart disco
+  shell: docker restart disco
+  ignore_errors: yes
+  when: disco_config.changed

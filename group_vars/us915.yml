@@ -2,7 +2,7 @@
 # Miner Region Overrides
 target_miner_region: "US915"
 # Locales & Timezone
-timezone: "America/Chicago"
+timezone: "US/Mountain"
 locale: "en_US.UTF-8"
 xkblayout: "us"
 wifi_country: "US"
