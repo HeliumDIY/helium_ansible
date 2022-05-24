@@ -14,6 +14,7 @@ services:
       - "1681:1681/udp"
     volumes:
       - /home/pi/disco/disco.json:/disco.json
+    restart: unless-stopped
 {% endif %}
 {% if enable_packet_mux %}
   chirpstack-packet-multiplexer:

@@ -7,13 +7,10 @@
     mode: 0755
 
 - name: copy disco client config file
-  ansible.builtin.copy:
-    src: "./disco.json"
-    dest: /home/pi/disco/disco.json
+  copy:
+    src: disco_config/disco.json
+    dest: /home/pi/disco/
     owner: pi
-  register: disco_config
+    group: pi
+    mode: 0644  
 
-- name: docker restart disco
-  shell: docker restart disco
-  ignore_errors: yes
-  when: disco_config.changed

@@ -6,7 +6,7 @@ seed_peer: "/p2p/11hVUgp5hMrZhCKcbamRUL1RnDxbEdpDVytSZsiGSkjRJxbujwa"
 #Disco client
 enable_disco_client: True
 target_disco_image: "ghcr.io/gradoj/discoclient" 
-target_disco_tag: "v0.0.7"
+target_disco_tag: "v0.0.16"
 #chirpstack multiplexer
 enable_packet_mux: True
 target_mux_image: "" 

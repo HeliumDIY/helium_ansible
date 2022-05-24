@@ -1,5 +1,6 @@
 {
     "hotspot_addr": "",
     "disco_id": "",
-    "listen_port": 1681
+    "listen_port": 1681,
+    "password": ""
 }
