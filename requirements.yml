@@ -1,3 +1,7 @@
 # from galaxy
 # Tailscale Role
 - src:  artis3n.tailscale
+- src: https://github.com/vitalk/ansible-secure-ssh
+  version: master
+  name: vitalk.secure-ssh
+  

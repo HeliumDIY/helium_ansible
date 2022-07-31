@@ -57,3 +57,6 @@ tailscale_auth_key: !vault | # Fake example encrypted by Ansible Vault
           3537
 # Aliases
 enable_miner_aliases: False
+# Secure SSH
+ssh_identity_key: ~/.ssh/id_rsa.pub
+ssh_user: pi

@@ -1,6 +1,9 @@
 - name: Miner
   import_tasks: miner.yml
 
+- name: Secure SSH
+  import_tasks: secure.yml
+
 - name: Grafana Agent
   import_tasks: grafana-agent.yml
   when: enable_grafana_agent == True
