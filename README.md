@@ -21,6 +21,14 @@ Afer writing out the image, enable ssh access by touching a file named ssh in th
 On Mac: touch /Volumes/boot/ssh
 On Linux: touch <mount point>/ssh
 
+Copy your ssh key into the pi:  
+  
+```
+ssh-copy-id pi@<that ip>
+```  
+insert the password from the pi and place the password for yout ssh key, if any.
+  
+  
 Connect the miner to your network and get its IP address. Test connectivity. The password is raspberry.
 ```
 ssh pi@<that ip>
@@ -46,8 +54,8 @@ all:
 ```
 target_hostname: "hotspot-animal-name"		# your hotspot name
 target_domain: "local"				# 
-target_hotspot_vendor: "cotx"			# cotx or pisces or rakv2
-target_miner_key: True				# 
+target_hotspot_vendor: "cotx"			# cotx or pisces or rakv2 or sensecap
+target_miner_key: True				# --> True if you want to use the key miner from ECC chip
 target_pf_concentrator_interface: "spi"		# usb
 target_pf_concentrator_model: "sx1250"		# only sx1250 for now
 # Tailscale subnet to subroute traffic https://tailscale.com/kb/1019/subnets/
@@ -61,6 +69,22 @@ Turn openvpn on in group_vars/all.yaml
 enable_openvpn: True # Also need to define openvpn_config
 ```
 
+### Configure Packet Forward
+ 
+Turn internal Packet Forward on in group_vars/all.yaml
+  
+```  
+#Packet Forwarder
+enable_packet_forwarder: True
+```  
+
+Use external Paket Forward (i.e. Dragino )
+    
+```  
+#Packet Forwarder
+enable_packet_forwarder: False
+```  
+ 
 ### Configure Tailscale (optional)
 
 If you wish to use tailscale, please install the dependencies:
