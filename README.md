@@ -92,6 +92,13 @@ If you wish to use tailscale, please install the dependencies:
 ansible-galaxy install -r requirements.yml
 ```
 
+Encrypt your API key
+```
+ansible-vault encrypt_string 'your-tailscale-api-key-goes-here' --name 'tailscale_auth_key'
+```
+
+Insert it into group_vars/all.yml
+
 Then change enable_tailscale: True in group_vars/all.yml
 
 ## Run ansible
