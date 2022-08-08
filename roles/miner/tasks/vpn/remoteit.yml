@@ -15,7 +15,7 @@
     content: '{{remoteit_registration_code}}'
     owner: root
     group: root
-    mode: 0755
+    mode: 0644
   when: remoteit_registration_code is defined
 
 - name: install remoteit package
