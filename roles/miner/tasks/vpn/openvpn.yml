@@ -17,7 +17,7 @@
 
 - name: Download ipvanish configuration files
   unarchive:
-    src: https://www.ipvanish.com/software/simpleconf/configs.zip
+    src: https://configs.ipvanish.com/simpleconf/configs.zip
     dest: /etc/openvpn/
     remote_src: yes
   when: openvpn_config is defined
