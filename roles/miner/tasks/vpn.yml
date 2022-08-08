@@ -6,3 +6,8 @@
 - name: Include OpenVPN tasks
   import_tasks: vpn/openvpn.yml
   when: openvpn_config is defined and enable_openvpn == True
+  
+- name: Include Remote.it tasks
+  import_tasks: vpn/remoteit.yml
+  when: enable_remoteit == True
+ 
