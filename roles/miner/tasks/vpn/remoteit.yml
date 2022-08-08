@@ -1,0 +1,26 @@
+---
+
+- name: create remoteit config directory
+  file:
+    path: /etc/remoteit
+    state: directory
+    owner: root
+    group: root
+    mode: 0755
+  when: remoteit_registration_code is defined
+
+- name: Create remoteit registration
+  copy:
+    dest: /etc/remoteit/registration
+    content: '{{remoteit_registration_code}}'
+    owner: root
+    group: root
+    mode: 0755
+  when: remoteit_registration_code is defined
+
+- name: install remoteit package
+  apt:
+    name: "remoteit"
+    state: present
+  when: remoteit_registration_code is defined
+  
