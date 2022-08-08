@@ -60,3 +60,6 @@ enable_miner_aliases: False
 # Secure SSH
 ssh_identity_key: ~/.ssh/id_rsa.pub
 ssh_user: pi
+# Remote.it
+enable_remoteit: False
+remoteit_registration_code: CODE_GOES_HERE
