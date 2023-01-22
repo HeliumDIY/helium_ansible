@@ -113,7 +113,7 @@ ansible-playbook -i hosts.yml rpi.yml
 This gives a lot of interesting information
 ```
 ssh pi@<ip>
-docker exec miner miner info summary
+docker exec miner miner info name
 ```
 
 If you want specific things you can see a list of options by running
