@@ -136,10 +136,14 @@ pi@my-hot-spot:~ $ docker exec miner miner info summary
 ## Configure wallet
 
 This will ask you to enter your 12 words and then you can use the cli wallet to manage the hotspot
+```
 HELIUM_WALLET_PASSWORD='wallet password' helium-wallet create basic --seed mobile -o ~/helium/keys/${hotspot}.key
+```
 
 to assert.
+```
 HELIUM_WALLET_PASSWORD='wallet password' helium-wallet --format json -f ${key_file} hotspots assert --gateway ${hotspot_address} --gain=${gain} --elevation=${elevation} --lat=${lat} --lon=${lon} --commit
+```
 
 ## Issues
 
