@@ -5,7 +5,7 @@ seed_node: "/ip4/199.229.250.69/tcp/2154"
 seed_peer: "/p2p/11hVUgp5hMrZhCKcbamRUL1RnDxbEdpDVytSZsiGSkjRJxbujwa"
 #Packet Forwarder
 enable_packet_forwarder: False
-target_pf_image: "ghcr.io/heliumdiy/sx1302_hal" # heliumdiy/sx1302_hal on docker hub
+target_pf_image: "heliumdiy/sx1302_hal"
 target_pf_tag: "0.0.11"
 # Helium Workarounds
 workarounds_log_only_failed: True
