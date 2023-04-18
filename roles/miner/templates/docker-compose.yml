@@ -31,7 +31,7 @@ services:
     privileged: true
     restart: unless-stopped  
     logging:
-      driver: json-file  
+      driver: json-file
       options:
         tag: "{{ '{{' }}.ImageName{{ '}}' }}|{{ '{{' }}.Name{{ '}}' }}|{{ '{{' }}.ImageFullID{{ '}}' }}|{{ '{{' }}.FullID{{ '}}' }}"
 {% endif %}
@@ -42,6 +42,10 @@ services:
     container_name: miner
     environment:
       - REGION_OVERRIDE={{ target_miner_region }}
+      - GW_REGION={{ target_miner_region }}
+      - GW_KEYPAIR=ecc://i2c-1
+      - GW_LISTEN=0.0.0.0:1680
+      - GW_API=0.0.0.0:4467
 {% if use_host_networking is defined and use_host_networking == True %}
     network_mode: host
 {% else %}
